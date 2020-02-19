@@ -11,89 +11,141 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   FocusNode useNameFocus = new FocusNode();
-  FocusNode useNamePassword = new FocusNode();
+  FocusNode passwordFocus = new FocusNode();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
+
 // 0xff4160ce
   @override
   Widget build(BuildContext context) {
+     var imgHight =  MediaQuery.of(context).size.height / 3 + 40;
+     //var imgContainer = imgHight *2 -80;
     StatusbarUtil.setTranslucent();
     StatusbarUtil.setStatusBarFont(FontStyle.black);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ListView(
+      body: Column(
+
         children: <Widget>[
-          SizedBox(height: 10,),
+
           Container(
+            height:imgHight,
             child: Image.asset(
-              "assets/doctor.jpg",
-              height: MediaQuery.of(context).size.height / 3,fit: BoxFit.cover,
+              "assets/images/doctor.jpg",
+              fit: BoxFit.cover,
             ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height,
-            color: Color(0xff4160ce),
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 15,
-                ),
-             Container(
-               padding: EdgeInsets.symmetric(horizontal: 20),
-               child: TextField(
-                 style: TextStyle(color: Colors.white),
-                 decoration: InputDecoration(
-                   labelStyle: TextStyle(color: Colors.white),
-                   labelText: "Username",
-                 ),
-               ),
-             ),
-             Container(
-               padding: EdgeInsets.symmetric(horizontal: 20),
-               child: TextField(
+          
+          
+          Expanded(
+            child: Container(
+              
+              color: Color(0xff4160ce),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: TextField(
 
-                   style: TextStyle(color: Colors.white),
-                   decoration: InputDecoration(
-focusColor: Colors.white,
-                     labelStyle: TextStyle(color: Colors.grey),
-                 labelText: "Password",
-               )),
-             ),
-             SizedBox(
-               height: 15,
-             ),
-             Container(
-               margin: EdgeInsets.only(left: 200),
-               child: Text(
-                 "Forget Your Password ?",
-                 style: TextStyle(color: Colors.white70),
-               ),
-             ),
-             SizedBox(
-               height: 60,
-             ),
-             SizedBox(
-               height: 40,
-               width: 350,
-               child: RaisedButton(
-                 onPressed: null,
-                 shape: RoundedRectangleBorder(
-                     borderRadius: new BorderRadius.circular(18.0),
-                     side: BorderSide(color: Colors.blueAccent)),
-               ),
-             )
-              ],
+                        autofocus: false,
+                        focusNode: useNameFocus,
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          labelStyle: TextStyle(color: Colors.grey),
+                          labelText: "Username",
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: TextField(
+                          autofocus: false,
+                          focusNode: passwordFocus,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            labelStyle: TextStyle(color: Colors.grey),
+                            labelText: "Password",
+                          )),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 15, top: 10),
+                      child: Text(
+                        "Forget Your Password ?",
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 15),
+                        child: RaisedButton(
+                          padding: EdgeInsets.all(14),
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18.0),
+                          ),
+                          onPressed: () {},
+                          color: Color(0xff4ce4b1),
+                          textColor: Colors.white,
+                          child: Text("Login".toUpperCase(),
+                              style: TextStyle(fontSize: 14)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15,),
+                    Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 15),
+                        child: RaisedButton(
+                          padding: EdgeInsets.all(15),
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.white),
+                          ),
+                          onPressed: () {},
+                          color: Colors.transparent,
+                          textColor: Colors.white,
+                          child: Text("connect with facebook ".toUpperCase(),
+                              style: TextStyle(fontSize: 14)),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           )
         ],
       ),
     );
   }
-
-
 }
