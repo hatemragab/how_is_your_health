@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'Registration.dart';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -13,17 +15,11 @@ class _LoginState extends State<Login> {
   FocusNode useNameFocus = new FocusNode();
   FocusNode passwordFocus = new FocusNode();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
 // 0xff4160ce
   @override
   Widget build(BuildContext context) {
-     var imgHight =  MediaQuery.of(context).size.height / 3 + 40;
-     //var imgContainer = imgHight *2 -80;
+    var imgHight = MediaQuery.of(context).size.height / 3 + 40;
+    //var imgContainer = imgHight *2 -80;
     StatusbarUtil.setTranslucent();
     StatusbarUtil.setStatusBarFont(FontStyle.black);
     SystemChrome.setSystemUIOverlayStyle(
@@ -31,21 +27,16 @@ class _LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
-
         children: <Widget>[
-
           Container(
-            height:imgHight,
+            height: imgHight,
             child: Image.asset(
               "assets/images/doctor.jpg",
               fit: BoxFit.cover,
             ),
           ),
-          
-          
           Expanded(
             child: Container(
-              
               color: Color(0xff4160ce),
               child: SingleChildScrollView(
                 child: Column(
@@ -57,7 +48,6 @@ class _LoginState extends State<Login> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: TextField(
-
                         autofocus: false,
                         focusNode: useNameFocus,
                         style: TextStyle(color: Colors.white),
@@ -120,7 +110,9 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 15,),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -129,7 +121,7 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.all(15),
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.white),
+                            side: BorderSide(color: Colors.white),
                           ),
                           onPressed: () {},
                           color: Colors.transparent,
@@ -139,6 +131,44 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 15),
+                        child: RaisedButton(
+                          padding: EdgeInsets.all(15),
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.white),
+                          ),
+                          onPressed: () {},
+                          color: Colors.red,
+                          textColor: Colors.white,
+                          child: Text("Connect with G-mail ".toUpperCase(),
+                              style: TextStyle(fontSize: 14)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Registration()),
+                          );
+                        },
+                        child: Center(
+                            child: Text(
+                          "Sign Up and join our Community",
+                          style: TextStyle(color: Colors.white),
+                        )))
+                    ,SizedBox(height: 15,)
                   ],
                 ),
               ),
