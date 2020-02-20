@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Registration extends StatefulWidget {
   @override
@@ -8,6 +9,8 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: true);
+
     FocusNode usernameFocus = new FocusNode();
     FocusNode emailFocus = new FocusNode();
     FocusNode passwordFocus = new FocusNode();
@@ -30,10 +33,10 @@ class _RegistrationState extends State<Registration> {
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: 10,
+              height: ScreenUtil().setHeight(10),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(25)),
               child: TextField(
                   controller: usernameController,
                   autofocus: false,
@@ -51,10 +54,10 @@ class _RegistrationState extends State<Registration> {
                   )),
             ),
             SizedBox(
-              height: 10,
+              height: ScreenUtil().setHeight(10),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
               child: TextField(
                   controller: emailController,
                   autofocus: false,
@@ -72,10 +75,10 @@ class _RegistrationState extends State<Registration> {
                   )),
             ),
             SizedBox(
-              height: 10,
+              height: ScreenUtil().setHeight(10),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
               child: TextField(
                   controller: passwordController,
                   autofocus: false,
@@ -93,10 +96,10 @@ class _RegistrationState extends State<Registration> {
                   )),
             ),
             SizedBox(
-              height: 10,
+              height: ScreenUtil().setHeight(10),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
               child: TextField(
                   controller: confirmPasswordController,
                   autofocus: false,
@@ -114,12 +117,11 @@ class _RegistrationState extends State<Registration> {
                   )),
             ),
             SizedBox(
-              height: 20,
+              height: ScreenUtil().setHeight(20),
             ),
             Center(
               child: Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 15),
+                 margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(100)),
                 child: RaisedButton(
                   padding: EdgeInsets.all(14),
                   shape: new RoundedRectangleBorder(
@@ -133,9 +135,9 @@ class _RegistrationState extends State<Registration> {
               ),
             ),
             Container(
-                height: MediaQuery.of(context).size.height / 3,
+                height:ScreenUtil().setHeight( MediaQuery.of(context).size.height),
                 margin: EdgeInsets.only(top: 20),
-                width: MediaQuery.of(context).size.width,
+                width:ScreenUtil().setWidth(MediaQuery.of(context).size.width) ,
                 color: Color(0xff4160ce),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -146,7 +148,7 @@ class _RegistrationState extends State<Registration> {
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
                       child: Text(
                           "More than 60 milion patient are joined us to get the cure",
                           textAlign: TextAlign.center,
@@ -154,7 +156,7 @@ class _RegistrationState extends State<Registration> {
                     ),
                     Center(
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
+                        width: ScreenUtil().setWidth(MediaQuery.of(context).size.width),
                         margin:
                             EdgeInsets.only(right: 90, left: 90, bottom: 40),
                         child: RaisedButton(
