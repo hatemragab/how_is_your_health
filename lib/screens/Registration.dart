@@ -121,7 +121,7 @@ class _RegistrationState extends State<Registration> {
             ),
             Center(
               child: Container(
-                 margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(100)),
+                 margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(70)),
                 child: RaisedButton(
                   padding: EdgeInsets.all(14),
                   shape: new RoundedRectangleBorder(
@@ -136,8 +136,7 @@ class _RegistrationState extends State<Registration> {
             ),
             Container(
                 height:ScreenUtil().setHeight( MediaQuery.of(context).size.height),
-                margin: EdgeInsets.only(top: 20),
-                width:ScreenUtil().setWidth(MediaQuery.of(context).size.width) ,
+                 width:ScreenUtil().setWidth(MediaQuery.of(context).size.width) ,
                 color: Color(0xff4160ce),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -157,9 +156,9 @@ class _RegistrationState extends State<Registration> {
                     Center(
                       child: Container(
                         width: ScreenUtil().setWidth(MediaQuery.of(context).size.width),
-                        margin:
-                            EdgeInsets.only(right: 90, left: 90, bottom: 40),
-                        child: RaisedButton(
+                        margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(70),vertical: ScreenUtil().setHeight(20))
+                          //  EdgeInsets.only(right: 90, left: 90, bottom: 40),
+                        ,child: RaisedButton(
                           padding: EdgeInsets.all(14),
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(20.0),
