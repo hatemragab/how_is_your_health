@@ -10,17 +10,26 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreenState extends State<QuestionScreen> {
   List<QuestionItemModel> question = QuestionItemModel.questionModel;
 
+  int idOfVis = -1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            //Nav to add question page
+          },
+          child: Icon(Icons.add),
+        ),
         appBar: AppBar(),
         body: ListView.builder(
           shrinkWrap: true,
           itemCount: question.length,
           itemBuilder: (BuildContext context, index) {
             return Card(
-              elevation: 4,
+              elevation: 2,
               child: Container(
+                padding: EdgeInsets.only(top: 10),
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -47,7 +56,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               style:
                                   TextStyle(fontSize: 20, color: Colors.blue),
                             ),
-                            SizedBox(height: 5,),
+                            SizedBox(
+                              height: 5,
+                            ),
                             Text("${question[index].date}"),
                           ],
                         )
@@ -61,7 +72,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            setState(() {
+                              idOfVis = question[index].id;
+                            });
+                          },
                           child: Row(
                             children: <Widget>[
                               Icon(
@@ -89,7 +104,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               SizedBox(
                                 width: 3,
                               ),
-                              Text("Answer"),
+                              InkWell(child: Text("Answer")),
                             ],
                           ),
                         ),
@@ -105,12 +120,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               Text("Share")
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                     SizedBox(
                       height: 10,
-                    )
+                    ),
+                    Visibility(visible: idOfVis==question[index].id ? true:false, child: Text('frist ans')),
                   ],
                 ),
               ),

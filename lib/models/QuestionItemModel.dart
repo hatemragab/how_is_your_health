@@ -1,4 +1,5 @@
 class QuestionItemModel {
+  int id;
   String _imageUserProfile;
   String _userName;
   String _imageDoctorProfile;
@@ -9,6 +10,7 @@ class QuestionItemModel {
   int _likes;
 
   QuestionItemModel(
+      this.id,
       this._imageUserProfile,
       this._userName,
       this._imageDoctorProfile,
@@ -67,7 +69,7 @@ class QuestionItemModel {
   }
 
   static List<QuestionItemModel> questionModel = [
-    new QuestionItemModel(
+    new QuestionItemModel(0,
         "assets/images/profile1.jpg",
         "Amir",
         "assets/images/profile2.jpg",
@@ -76,7 +78,7 @@ class QuestionItemModel {
         "ما هو علاج انتفاخ القولون",
         "برشام zombrax",
         4),
-    new QuestionItemModel(
+    new QuestionItemModel(1,
         "assets/images/profile3.jpg",
         "Hatem",
         "assets/images/profile4.jpg",
@@ -85,7 +87,7 @@ class QuestionItemModel {
         "عندى دمل فى بطنى تاعبنى ",
         " تعالى افقعهولك ",
         100),
-    new QuestionItemModel(
+    new QuestionItemModel(2,
         "assets/images/profile2.jpg",
         "Atef",
         "assets/images/profile1.jpg",
