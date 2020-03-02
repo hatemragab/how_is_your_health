@@ -25,6 +25,9 @@ dependencies:
   cupertino_icons: ^0.1.2
   statusbar_util: ^1.0.1
   flutter_screenutil: ^1.0.2
+  font_awesome_flutter: ^8.7.0
+  flutter_swiper: ^1.1.6
+  circular_profile_avatar: ^1.0.6
 
 dev_dependencies:
   flutter_test:

@@ -16,14 +16,14 @@ class _RegistrationState extends State<Registration> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-   // final bottom =100.0;
+    // final bottom =100.0;
 
     ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: true);
 
     return Scaffold(
-
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
@@ -33,164 +33,174 @@ class _RegistrationState extends State<Registration> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: Padding(
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              padding:
+                  EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(25)),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    //user Name TextField
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      child: TextField(
+                          controller: usernameController,
+                          autofocus: false,
+                          focusNode: usernameFocus,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            labelStyle: TextStyle(color: Colors.grey),
+                            labelText: "Username",
+                          )),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-        child: Column(
-          children: <Widget>[
-            Expanded(
+                    //user Email TextField
+                    Container(
+                      child: TextField(
+                          controller: emailController,
+                          autofocus: false,
+                          focusNode: emailFocus,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            labelStyle: TextStyle(color: Colors.grey),
+                            labelText: "Email",
+                          )),
+                    ),
 
+                    SizedBox(
+                      height: 20,
+                    ),
 
-              child: Container(
+                    //user Password TextField
+                    Container(
+                      child: TextField(
+                          controller: passwordController,
+                          autofocus: false,
+                          focusNode: passwordFocus,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            labelStyle: TextStyle(color: Colors.grey),
+                            labelText: "Password",
+                          )),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-                padding:
-                    EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(25)),
-                child: SingleChildScrollView(
-                  child: Column(
+                    //user Confirm Password TextField
+                    Container(
+                      child: TextField(
+                          controller: confirmPasswordController,
+                          autofocus: false,
+                          focusNode: confirmPasswordFocus,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            labelStyle: TextStyle(color: Colors.grey),
+                            labelText: "Confirm Password",
+                          )),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-                    children: <Widget>[
-                      //user Name TextField
-                      Container(
-                        child: TextField(
-                            controller: usernameController,
-                            autofocus: false,
-                            focusNode: usernameFocus,
-                            style: TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              labelStyle: TextStyle(color: Colors.grey),
-                              labelText: "Username",
-                            )),
-                      ),
-
-                      //user Email TextField
-                      Container(
-                        child: TextField(
-                            controller: emailController,
-                            autofocus: false,
-                            focusNode: emailFocus,
-                            style: TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              labelStyle: TextStyle(color: Colors.grey),
-                              labelText: "Email",
-                            )),
-                      ),
-
-
-                      //user Password TextField
-                      Container(
-                        child: TextField(
-                            controller: passwordController,
-                            autofocus: false,
-                            focusNode: passwordFocus,
-                            style: TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              labelStyle: TextStyle(color: Colors.grey),
-                              labelText: "Password",
-                            )),
-                      ),
-
-                      //user Confirm Password TextField
-                      Container(
-                        child: TextField(
-                            controller: confirmPasswordController,
-                            autofocus: false,
-                            focusNode: confirmPasswordFocus,
-                            style: TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              labelStyle: TextStyle(color: Colors.grey),
-                              labelText: "Confirm Password",
-                            )),
-                      ),
-
-                      //sign up bottom
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: RaisedButton(
-                          padding: EdgeInsets.symmetric(vertical: 12),
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(18.0),
-                          ),
-                          onPressed: () {},
-                          color: Color(0xff4ce4b1),
-                          textColor: Colors.white,
-                          child: Text("Sign Up", style: TextStyle(fontSize: 16)),
+                    //sign up bottom
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: RaisedButton(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(18.0),
                         ),
+                        onPressed: () {},
+                        color: Color(0xff4ce4b1),
+                        textColor: Colors.white,
+                        child: Text("Sign Up", style: TextStyle(fontSize: 16)),
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-
-                      //are you a doctor
-                    ],
-                  ),
+                    //are you a doctor
+                  ],
                 ),
               ),
             ),
-            Container(
-                height: MediaQuery.of(context).size.height / 4,
-                width: MediaQuery.of(context).size.width,
-                color: Color(0xff4160ce),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Text(
-                      "Are you a doctor ?",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: ScreenUtil().setWidth(20)),
-                      child: Text(
-                          "More than 60 milion patient are joined us to get the cure",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white, fontSize: 16)),
-                    ),
-                    Container(
-                      width: ScreenUtil()
-                          .setWidth(MediaQuery.of(context).size.width),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: ScreenUtil().setWidth(70),
-                          vertical: ScreenUtil().setHeight(20))
-                      //  EdgeInsets.only(right: 90, left: 90, bottom: 40),
-                      ,
-                      child: RaisedButton(
-                        padding: EdgeInsets.all(14),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20.0),
-                        ),
-                        onPressed: () {},
-                        color: Colors.white,
-                        textColor: Colors.white,
-                        child: Text("Join Now",
-                            style: TextStyle(
-                                fontSize: 16, color: Color(0xff4160ce))),
+          ),
+          Container(
+              height: MediaQuery.of(context).size.height / 4,
+              width: MediaQuery.of(context).size.width,
+              color: Color(0xff4160ce),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text(
+                    "Are you a doctor ?",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(20)),
+                    child: Text(
+                        "More than 60 milion patient are joined us to get the cure",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontSize: 16)),
+                  ),
+                  Container(
+                    width: ScreenUtil()
+                        .setWidth(MediaQuery.of(context).size.width),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: ScreenUtil().setWidth(70),
+                        vertical: ScreenUtil().setHeight(20))
+                    //  EdgeInsets.only(right: 90, left: 90, bottom: 40),
+                    ,
+                    child: RaisedButton(
+                      padding: EdgeInsets.all(14),
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(20.0),
                       ),
-                    )
-                  ],
-                )),
-          ],
-        ),
+                      onPressed: () {},
+                      color: Colors.white,
+                      textColor: Colors.white,
+                      child: Text("Join Now",
+                          style: TextStyle(
+                              fontSize: 16, color: Color(0xff4160ce))),
+                    ),
+                  )
+                ],
+              )),
+        ],
       ),
     );
   }

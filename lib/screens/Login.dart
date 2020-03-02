@@ -1,3 +1,4 @@
+import 'package:how_is_your_health/screens/Category.dart';
 import 'package:statusbar_util/statusbar_util.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -37,7 +38,7 @@ class _LoginState extends State<Login> {
           ),
           Expanded(
             child: Container(
-              color: Color(0xff4160ce),
+              color: Colors.white30,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -50,15 +51,15 @@ class _LoginState extends State<Login> {
                       child: TextField(
                         autofocus: false,
                         focusNode: useNameFocus,
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: BorderSide(color: Color(0xff4ce4b1)),
                           ),
                           focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: BorderSide(color: Color(0xff4ce4b1)),
                           ),
-                          labelStyle: TextStyle(color: Colors.grey),
+                          labelStyle: TextStyle(color: Color(0xff4ce4b1)),
                           labelText: "Username",
                         ),
                       ),
@@ -68,15 +69,15 @@ class _LoginState extends State<Login> {
                       child: TextField(
                           autofocus: false,
                           focusNode: passwordFocus,
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.black),
                           decoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                              borderSide: BorderSide(color: Color(0xff4ce4b1)),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                              borderSide: BorderSide(color: Color(0xff4ce4b1)),
                             ),
-                            labelStyle: TextStyle(color: Colors.grey),
+                            labelStyle: TextStyle(color: Color(0xff4ce4b1)),
                             labelText: "Password",
                           )),
                     ),
@@ -87,27 +88,31 @@ class _LoginState extends State<Login> {
                       margin: EdgeInsets.only(right: 15, top: 10),
                       child: Text(
                         "Forget Your Password ?",
-                        style: TextStyle(color: Colors.white70),
+                        style: TextStyle(color: Color(0xff4ce4b1)),
                       ),
                     ),
                     SizedBox(
                       height: 30,
                     ),
-                    Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 15),
-                        child: RaisedButton(
-                          padding: EdgeInsets.all(14),
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(18.0),
-                          ),
-                          onPressed: () {},
-                          color: Color(0xff4ce4b1),
-                          textColor: Colors.white,
-                          child: Text("Login".toUpperCase(),
-                              style: TextStyle(fontSize: 14)),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      child: RaisedButton(
+                        padding: EdgeInsets.all(14),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(18.0),
                         ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>Category()),
+                          );
+                        },
+                        color: Color(0xff4ce4b1),
+                        textColor: Colors.white,
+                        child: Text("Login",
+                            style: TextStyle(fontSize: 16)),
                       ),
                     ),
                     SizedBox(
@@ -121,7 +126,7 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.all(15),
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.white),
+                            side: BorderSide(color: Colors.blue),
                           ),
                           onPressed: () {},
                           color: Colors.transparent,
@@ -142,7 +147,7 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.all(15),
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.white),
+                            side: BorderSide(color: Colors.blueAccent),
                           ),
                           onPressed: () {},
                           color: Colors.red,
@@ -165,9 +170,9 @@ class _LoginState extends State<Login> {
                         },
                         child: Center(
                             child: Text(
-                          "Sign Up and join our Community",
-                          style: TextStyle(color: Colors.white),
-                        )))
+                              "Sign Up and join our Community",
+                              style: TextStyle(color: Colors.blueAccent),
+                            )))
                     ,SizedBox(height: 15,)
                   ],
                 ),
