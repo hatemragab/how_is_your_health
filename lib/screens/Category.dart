@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:how_is_your_health/Providers/AuthProvider.dart';
+import 'package:how_is_your_health/models/UserModel.dart';
 import 'package:how_is_your_health/models/categoryModel.dart';
 import 'package:how_is_your_health/screens/QuestionScreen.dart';
+import 'package:provider/provider.dart';
 import 'package:statusbar_util/statusbar_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -15,12 +18,20 @@ class Category extends StatefulWidget {
 class _CategoryState extends State<Category> {
   SwiperController controller = SwiperController();
   List<categoryModel> _listCategory = categoryModel.categoryList;
-
+  UserModel userModel;
   List<String> swiperImage = [
     "assets/images/d.jpg",
     "assets/images/TheFemaleDoctor.jpg",
     "assets/images/doctora.jpg"
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userModel = Provider.of<AuthProvider>(context, listen: false).userModel;
+    print(userModel.name);
+  }
 
   @override
   Widget build(BuildContext context) {
