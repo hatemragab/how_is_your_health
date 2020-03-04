@@ -1,6 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:how_is_your_health/Constants.dart';
+import 'package:how_is_your_health/Providers/AuthProvider.dart';
+import 'package:how_is_your_health/models/UserModel.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'dart:convert' as convert;
+
+import 'Category.dart';
+import 'Home.dart';
 
 class Registration extends StatefulWidget {
   @override
@@ -10,19 +20,19 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   FocusNode usernameFocus = new FocusNode();
   FocusNode emailFocus = new FocusNode();
+  FocusNode phoneFocus = new FocusNode();
   FocusNode passwordFocus = new FocusNode();
   FocusNode confirmPasswordFocus = new FocusNode();
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     // final bottom =100.0;
-
     ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: true);
-
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
@@ -89,6 +99,27 @@ class _RegistrationState extends State<Registration> {
                     SizedBox(
                       height: 20,
                     ),
+                    Container(
+                      child: TextField(
+                          controller: phoneController,
+                          autofocus: false,
+                          focusNode: phoneFocus,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            labelStyle: TextStyle(color: Colors.grey),
+                            labelText: "Phone",
+                          )),
+                    ),
+
+                    SizedBox(
+                      height: 20,
+                    ),
 
                     //user Password TextField
                     Container(
@@ -142,7 +173,9 @@ class _RegistrationState extends State<Registration> {
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(18.0),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          startRegister();
+                        },
                         color: Color(0xff4ce4b1),
                         textColor: Colors.white,
                         child: Text("Sign Up", style: TextStyle(fontSize: 16)),
@@ -158,50 +191,76 @@ class _RegistrationState extends State<Registration> {
               ),
             ),
           ),
-          Container(
-              height: MediaQuery.of(context).size.height / 4,
-              width: MediaQuery.of(context).size.width,
-              color: Color(0xff4160ce),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    "Are you a doctor ?",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: ScreenUtil().setWidth(20)),
-                    child: Text(
-                        "More than 60 milion patient are joined us to get the cure",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontSize: 16)),
-                  ),
-                  Container(
-                    width: ScreenUtil()
-                        .setWidth(MediaQuery.of(context).size.width),
-                    margin: EdgeInsets.symmetric(
-                        horizontal: ScreenUtil().setWidth(70),
-                        vertical: ScreenUtil().setHeight(20))
-                    //  EdgeInsets.only(right: 90, left: 90, bottom: 40),
-                    ,
-                    child: RaisedButton(
-                      padding: EdgeInsets.all(14),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(20.0),
-                      ),
-                      onPressed: () {},
-                      color: Colors.white,
-                      textColor: Colors.white,
-                      child: Text("Join Now",
-                          style: TextStyle(
-                              fontSize: 16, color: Color(0xff4160ce))),
-                    ),
-                  )
-                ],
-              )),
+
         ],
       ),
+      bottomNavigationBar:    Container(
+          height: MediaQuery.of(context).size.height / 4,
+          width: MediaQuery.of(context).size.width,
+          color: Color(0xff4160ce),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text(
+                "Are you a doctor ?",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: ScreenUtil().setWidth(20)),
+                child: Text(
+                    "More than 60 milion patient are joined us to get the cure",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: 16)),
+              ),
+              Container(
+                width: ScreenUtil()
+                    .setWidth(MediaQuery.of(context).size.width),
+                margin: EdgeInsets.symmetric(
+                    horizontal: ScreenUtil().setWidth(70),
+                    vertical: ScreenUtil().setHeight(20))
+                //  EdgeInsets.only(right: 90, left: 90, bottom: 40),
+                ,
+                child: RaisedButton(
+                  padding: EdgeInsets.all(14),
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(20.0),
+                  ),
+                  onPressed: () {},
+                  color: Colors.white,
+                  textColor: Colors.white,
+                  child: Text("Join Now",
+                      style: TextStyle(
+                          fontSize: 16, color: Color(0xff4160ce))),
+                ),
+              )
+            ],
+          )),
     );
+  }
+
+  startRegister() async {
+    var req = await http.post('${Constants.SERVERURL}createUsers', body: {
+      'name': usernameController.text,
+      'email': emailController.text,
+      'password': passwordController.text,
+      'phone': phoneController.text
+    });
+
+    var res = convert.jsonDecode(req.body);
+
+    bool err = res['error'];
+    if (!err) {
+      Provider.of<AuthProvider>(context, listen: false).userModel =
+          new UserModel(
+              name: res['data']['name'],
+              email: res['data']['email'],
+              phone: res['data']['phone'],
+              password: passwordController.text);
+
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => Category()));
+    } else {
+      Fluttertoast.showToast(msg: res['data']);
+    }
   }
 }
