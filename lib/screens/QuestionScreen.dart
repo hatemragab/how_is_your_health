@@ -90,11 +90,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             ],
                           ),
                         ),
-                        VerticalDivider(
-                          thickness: 5,
-                          width: 5,
-                          color: Colors.black,
-                        ),
                         InkWell(
                           onTap: () {},
                           child: Row(
@@ -108,7 +103,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             ],
                           ),
                         ),
-                        VerticalDivider(),
                         InkWell(
                           onTap: () {},
                           child: Row(
@@ -132,64 +126,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
               ),
             );
           },
-
-//          shrinkWrap: true,
-//          itemCount: question.length,
-//          itemBuilder: (BuildContext context, index) {
-//            return Card(
-//              color: Colors.lightBlueAccent,
-//              elevation: 10,
-//              shape: RoundedRectangleBorder(
-//                  borderRadius: BorderRadius.circular(30.0)),
-//              child: Column(
-//                children: <Widget>[
-//                  Container(
-//                     child: Column(
-//                      children: <Widget>[
-//                        Row(
-//                          children: <Widget>[
-//                            Container(
-//                              width: 25,
-//                              height: 25,
-//                              child: Image.asset(
-//                                question[index].imageUserProfile,
-//                                fit: BoxFit.cover,
-//                              ),
-//                            ),
-//                            Text(question[index].userName)
-//                          ],
-//                        ),
-//                        Text(question[index].question,style: TextStyle(fontSize: 25,color: Colors.black),),
-//                      ],
-//                    ),
-//                  ),
-//                  Divider(
-//                    color: Colors.black,
-//                  ),
-//                  Container(
-//                     child: Column(
-//                      children: <Widget>[
-//                        Row(
-//                          children: <Widget>[
-//                            Container(
-//                              width: 25,
-//                              height: 25,
-//                              child: Image.asset(
-//                                question[index].imageDoctorProfile,
-//                                fit: BoxFit.cover,
-//                              ),
-//                            ),
-//                            Text(question[index].doctorName)
-//                          ],
-//                        ),
-//                        Text(question[index].answer,style: TextStyle(fontSize: 20,color: Colors.black),),
-//                      ],
-//                    ),
-//                  )
-//                ],
-//              ),
-//            );
-//          }),
         ));
   }
 }
