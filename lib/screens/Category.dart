@@ -55,9 +55,20 @@ class _CategoryState extends State<Category> {
         child: ListView(
           children: <Widget>[
             DrawerHeader(
-              child: Material(
-                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                  child: Image.asset("assets/images/doctor.jpg",width: 60,height: 60,)),
+              child: Center(
+                child: Container(
+                   width: 150,
+                  height: 150,
+                  child: CircularProfileAvatar(
+                    "",
+                    child: Image.asset(
+                      "assets/images/doctor.jpg",
+                      fit: BoxFit.cover,
+                    ),
+                    radius: 150,
+                  ),
+                ),
+              ),
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: <Color>[
                 Colors.lightBlue,
