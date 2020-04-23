@@ -12,6 +12,8 @@ class MyApp extends StatelessWidget {
     // setStatusBarFontStyle
 
     return MultiProvider(
+
+
       providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
