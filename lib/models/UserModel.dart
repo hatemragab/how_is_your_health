@@ -11,6 +11,4 @@ class UserModel{
 
   UserModel({this.name, this.email, this.phone, this.password, this.img,this.ABO,this.height,this.weight});
 
-
-
 }

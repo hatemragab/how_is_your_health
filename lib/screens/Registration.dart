@@ -191,10 +191,9 @@ class _RegistrationState extends State<Registration> {
               ),
             ),
           ),
-
         ],
       ),
-      bottomNavigationBar:    Container(
+      bottomNavigationBar: Container(
           height: MediaQuery.of(context).size.height / 4,
           width: MediaQuery.of(context).size.width,
           color: Color(0xff4160ce),
@@ -206,16 +205,15 @@ class _RegistrationState extends State<Registration> {
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(20)),
+                padding:
+                    EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
                 child: Text(
                     "More than 60 milion patient are joined us to get the cure",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
               Container(
-                width: ScreenUtil()
-                    .setWidth(MediaQuery.of(context).size.width),
+                width: ScreenUtil().setWidth(MediaQuery.of(context).size.width),
                 margin: EdgeInsets.symmetric(
                     horizontal: ScreenUtil().setWidth(70),
                     vertical: ScreenUtil().setHeight(20))
@@ -230,8 +228,7 @@ class _RegistrationState extends State<Registration> {
                   color: Colors.white,
                   textColor: Colors.white,
                   child: Text("Join Now",
-                      style: TextStyle(
-                          fontSize: 16, color: Color(0xff4160ce))),
+                      style: TextStyle(fontSize: 16, color: Color(0xff4160ce))),
                 ),
               )
             ],
@@ -246,6 +243,7 @@ class _RegistrationState extends State<Registration> {
       'password': passwordController.text,
       'phone': phoneController.text
     });
+    print(req.body);
 
     var res = convert.jsonDecode(req.body);
 
@@ -260,6 +258,15 @@ class _RegistrationState extends State<Registration> {
 
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => Category()));
     } else {
+      showDialog(
+          context: context,
+          builder: (x) {
+            return AlertDialog(
+              title: Text('error'),
+              content: Text('${res['data']}'),
+              actions: <Widget>[FlatButton(onPressed: ()=>Navigator.pop(context), child: Text('OK'))],
+            );
+          });
       Fluttertoast.showToast(msg: res['data']);
     }
   }

@@ -94,16 +94,7 @@ class _LoginState extends State<Login> {
                             labelText: "Password",
                           )),
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 15, top: 10),
-                      child: Text(
-                        "Forget Your Password ?",
-                        style: TextStyle(color: Color(0xff4ce4b1)),
-                      ),
-                    ),
+
                     SizedBox(
                       height: 30,
                     ),
@@ -126,45 +117,7 @@ class _LoginState extends State<Login> {
                     SizedBox(
                       height: 15,
                     ),
-                    Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 15),
-                        child: RaisedButton(
-                          padding: EdgeInsets.all(15),
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.blue),
-                          ),
-                          onPressed: () {},
-                          color: Colors.transparent,
-                          textColor: Colors.white,
-                          child: Text("connect with facebook ".toUpperCase(),
-                              style: TextStyle(fontSize: 14)),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 15),
-                        child: RaisedButton(
-                          padding: EdgeInsets.all(15),
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.blueAccent),
-                          ),
-                          onPressed: () {},
-                          color: Colors.red,
-                          textColor: Colors.white,
-                          child: Text("Connect with G-mail ".toUpperCase(),
-                              style: TextStyle(fontSize: 14)),
-                        ),
-                      ),
-                    ),
+
                     SizedBox(
                       height: 10,
                     ),
