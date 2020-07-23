@@ -94,7 +94,6 @@ class _LoginState extends State<Login> {
                             labelText: "Password",
                           )),
                     ),
-
                     SizedBox(
                       height: 30,
                     ),
@@ -117,7 +116,6 @@ class _LoginState extends State<Login> {
                     SizedBox(
                       height: 15,
                     ),
-
                     SizedBox(
                       height: 10,
                     ),
@@ -160,12 +158,13 @@ class _LoginState extends State<Login> {
 
       bool err = res['error'];
       if (!err) {
-        Provider.of<AuthProvider>(context, listen: false).userModel =
-            new UserModel(
-                name: res['data']['name'],
-                email: res['data']['email'],
-                phone: res['data']['phone'],
-                password: passwordController.text);
+        UserModel userModel = new UserModel(
+            name: res['data']['name'],
+            email: res['data']['email'],
+            phone: res['data']['phone'],
+            password: passwordController.text);
+        Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
+        AuthProvider.saveUserData(userModel);
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (_) => Category()));
       } else {

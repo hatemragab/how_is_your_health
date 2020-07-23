@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:how_is_your_health/Providers/AuthProvider.dart';
 import 'package:how_is_your_health/screens/Login.dart';
+import 'package:how_is_your_health/screens/startPage.dart';
 import 'package:provider/provider.dart';
 import 'package:statusbar_util/statusbar_util.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Login(),
+        home: StartPage(),
       ),
     );
   }

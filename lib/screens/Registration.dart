@@ -249,13 +249,14 @@ class _RegistrationState extends State<Registration> {
 
     bool err = res['error'];
     if (!err) {
-      Provider.of<AuthProvider>(context, listen: false).userModel =
-          new UserModel(
-              name: res['data']['name'],
-              email: res['data']['email'],
-              phone: res['data']['phone'],
-              password: passwordController.text);
+      UserModel userModel = new UserModel(
+          name: res['data']['name'],
+          email: res['data']['email'],
+          phone: res['data']['phone'],
+          password: passwordController.text);
+      Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
 
+      AuthProvider.saveUserData(userModel);
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => Category()));
     } else {
       showDialog(
@@ -264,7 +265,10 @@ class _RegistrationState extends State<Registration> {
             return AlertDialog(
               title: Text('error'),
               content: Text('${res['data']}'),
-              actions: <Widget>[FlatButton(onPressed: ()=>Navigator.pop(context), child: Text('OK'))],
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () => Navigator.pop(context), child: Text('OK'))
+              ],
             );
           });
       Fluttertoast.showToast(msg: res['data']);

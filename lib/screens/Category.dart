@@ -6,6 +6,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:how_is_your_health/Providers/AuthProvider.dart';
 import 'package:how_is_your_health/models/UserModel.dart';
 import 'package:how_is_your_health/models/categoryModel.dart';
+import 'package:how_is_your_health/screens/Login.dart';
 import 'package:how_is_your_health/screens/QuestionScreen.dart';
 import 'package:how_is_your_health/screens/UserProfile.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +58,7 @@ class _CategoryState extends State<Category> {
             DrawerHeader(
               child: Center(
                 child: Container(
-                   width: 150,
+                  width: 150,
                   height: 150,
                   child: CircularProfileAvatar(
                     "",
@@ -159,7 +160,14 @@ class _CategoryState extends State<Category> {
             ListTile(
               title: InkWell(
                 splashColor: Colors.lightBlueAccent,
-                onTap: () {},
+                onTap: () {
+                  AuthProvider.deleteUserData();
+                  Navigator.of(context).pushAndRemoveUntil(
+
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => Login()),
+                          (Route<dynamic> route) => false);
+                },
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
