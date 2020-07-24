@@ -1,4 +1,5 @@
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:how_is_your_health/DB_Manager/utils/database_helper.dart';
 import 'package:how_is_your_health/Providers/AuthProvider.dart';
 import 'package:how_is_your_health/models/UserModel.dart';
 import 'package:how_is_your_health/screens/Category.dart';
@@ -106,7 +107,27 @@ class _LoginState extends State<Login> {
                           borderRadius: new BorderRadius.circular(18.0),
                         ),
                         onPressed: () {
-                          startLogin();
+                          // startLogin();
+
+                          if (emailController.text.isEmpty &&
+                              passwordController.text.isEmpty) {
+                            showDialog(
+                                context: context,
+                                builder: (x) {
+                                  return AlertDialog(
+                                    title: Text('error'),
+                                    content: Text('missing some input'),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text('OK'),
+                                      )
+                                    ],
+                                  );
+                                });
+                          } else {
+                            startLogin2();
+                          }
                         },
                         color: Color(0xff4ce4b1),
                         textColor: Colors.white,
@@ -172,6 +193,22 @@ class _LoginState extends State<Login> {
       }
     } catch (err) {
       print(err);
+    }
+  }
+
+  void startLogin2() async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    try {
+      var x = await databaseHelper.loginUser(
+          emailController.text, passwordController.text);
+      print('x isssssssssss   $x');
+      UserModel userModel = UserModel(
+          name: x[0]['name'], email: x[0]['email'], password: x[0]['password']);
+      AuthProvider.saveUserData(userModel);
+      Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => Category()));
+    } catch (err) {
+      print('error on catch insert user $err');
     }
   }
 }
