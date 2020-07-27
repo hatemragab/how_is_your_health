@@ -1,5 +1,5 @@
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:how_is_your_health/DB_Manager/utils/database_helper.dart';
+
 import 'package:how_is_your_health/Providers/AuthProvider.dart';
 import 'package:how_is_your_health/models/UserModel.dart';
 import 'package:how_is_your_health/screens/Category.dart';
@@ -126,7 +126,7 @@ class _LoginState extends State<Login> {
                                   );
                                 });
                           } else {
-                            startLogin2();
+                            startLogin();
                           }
                         },
                         color: Color(0xff4ce4b1),
@@ -196,19 +196,5 @@ class _LoginState extends State<Login> {
     }
   }
 
-  void startLogin2() async {
-    DatabaseHelper databaseHelper = DatabaseHelper();
-    try {
-      var x = await databaseHelper.loginUser(
-          emailController.text, passwordController.text);
-      print('x isssssssssss   $x');
-      UserModel userModel = UserModel(
-          name: x[0]['name'], email: x[0]['email'], password: x[0]['password']);
-      AuthProvider.saveUserData(userModel);
-      Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => Category()));
-    } catch (err) {
-      print('error on catch insert user $err');
-    }
-  }
+
 }

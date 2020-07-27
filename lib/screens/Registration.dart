@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:how_is_your_health/Constants.dart';
-import 'package:how_is_your_health/DB_Manager/utils/database_helper.dart';
 import 'package:how_is_your_health/Providers/AuthProvider.dart';
 import 'package:how_is_your_health/models/UserModel.dart';
 import 'package:http/http.dart' as http;
@@ -195,7 +194,7 @@ class _RegistrationState extends State<Registration> {
                                   );
                                 });
                           } else {
-                            startRegister2();
+                            startRegister();
                           }
                         },
                         color: Color(0xff4ce4b1),
@@ -297,36 +296,5 @@ class _RegistrationState extends State<Registration> {
     }
   }
 
-  void startRegister2() async {
-    DatabaseHelper databaseHelper = DatabaseHelper();
-    try {
-      UserModel userModel = new UserModel(
-          name: usernameController.text,
-          email: emailController.text,
-          phone: phoneController.text,
-          password: passwordController.text);
-      int x = await databaseHelper.insertUser(userModel);
-      print('x isssssssssss   $x');
 
-      Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
-
-      AuthProvider.saveUserData(userModel);
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => Category()));
-    } catch (err) {
-      showDialog(
-          context: context,
-          builder: (x) {
-            return AlertDialog(
-              title: Text('error'),
-              content: Text('missing some input'),
-              actions: <Widget>[
-                FlatButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text('OK'),
-                )
-              ],
-            );
-          });
-    }
-  }
 }
