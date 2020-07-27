@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:how_is_your_health/models/QuestionItemModel.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:how_is_your_health/screens/AddQuestion.dart';
+import 'package:share/share.dart';
+
+import 'Answers.dart';
 
 class QuestionScreen extends StatefulWidget {
   @override
@@ -10,18 +15,21 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreenState extends State<QuestionScreen> {
   List<QuestionItemModel> question = QuestionItemModel.questionModel;
 
-  int idOfVis = -1;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            //Nav to add question page
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => AddQuestion()));
           },
           child: Icon(Icons.add),
         ),
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('questions'),
+          centerTitle: true,
+          elevation: 1,
+        ),
         body: ListView.builder(
           shrinkWrap: true,
           itemCount: question.length,
@@ -73,9 +81,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       children: <Widget>[
                         InkWell(
                           onTap: () {
-                            setState(() {
-                              idOfVis = question[index].id;
-                            });
+                            Fluttertoast.showToast(msg: 'You Add Like');
                           },
                           child: Row(
                             children: <Widget>[
@@ -91,7 +97,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (_) => Answers()));
+                          },
                           child: Row(
                             children: <Widget>[
                               Icon(Icons.question_answer,
@@ -105,14 +114,20 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         ),
                         InkWell(
                           onTap: () {},
-                          child: Row(
-                            children: <Widget>[
-                              Icon(Icons.share, color: Colors.lightBlueAccent),
-                              SizedBox(
-                                width: 3,
-                              ),
-                              Text("Share")
-                            ],
+                          child: InkWell(
+                            onTap: () {
+                              shareText(question[index].question);
+                            },
+                            child: Row(
+                              children: <Widget>[
+                                Icon(Icons.share,
+                                    color: Colors.lightBlueAccent),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Text("Share")
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -120,12 +135,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    Visibility(visible: idOfVis==question[index].id ? true:false, child: Text('frist ans')),
                   ],
                 ),
               ),
             );
           },
         ));
+  }
+
+  void shareText(var txt) {
+    Share.share('${txt}');
   }
 }

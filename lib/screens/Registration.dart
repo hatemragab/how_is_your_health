@@ -175,8 +175,28 @@ class _RegistrationState extends State<Registration> {
                           borderRadius: new BorderRadius.circular(18.0),
                         ),
                         onPressed: () {
-                         // startRegister();
-                          startRegister2();
+                          // startRegister();
+                          if (usernameController.text.isEmpty &&
+                              emailController.text.isEmpty &&
+                              passwordController.text.isEmpty &&
+                              phoneController.text.isEmpty) {
+                            showDialog(
+                                context: context,
+                                builder: (x) {
+                                  return AlertDialog(
+                                    title: Text('error'),
+                                    content: Text('missing some input'),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text('OK'),
+                                      )
+                                    ],
+                                  );
+                                });
+                          } else {
+                            startRegister2();
+                          }
                         },
                         color: Color(0xff4ce4b1),
                         textColor: Colors.white,
@@ -285,8 +305,8 @@ class _RegistrationState extends State<Registration> {
           email: emailController.text,
           phone: phoneController.text,
           password: passwordController.text);
-       int x = await  databaseHelper.insertUser(userModel);
-       print('x isssssssssss   $x');
+      int x = await databaseHelper.insertUser(userModel);
+      print('x isssssssssss   $x');
 
       Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
 
