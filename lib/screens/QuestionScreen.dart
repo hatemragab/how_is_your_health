@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:how_is_your_health/Providers/AuthProvider.dart';
 import 'package:how_is_your_health/models/QuestionItemModel.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:how_is_your_health/models/UserModel.dart';
 import 'package:how_is_your_health/screens/AddQuestion.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'dart:convert' as convert;
 
+import '../Constants.dart';
 import 'Answers.dart';
 
 class QuestionScreen extends StatefulWidget {
+  int postion;
+
+  QuestionScreen(this.postion);
+
   @override
   _QuestionScreenState createState() => _QuestionScreenState();
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  List<QuestionItemModel> question = QuestionItemModel.questionModel;
+  List<QuestionItemModel> question = [];
+  UserModel userModel;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userModel = Provider.of<AuthProvider>(context, listen: false).userModel;
+    getQuestions();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +42,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => AddQuestion()));
+                .push(MaterialPageRoute(builder: (_) => AddQuestion(widget.postion)));
           },
           child: Icon(Icons.add),
         ),
@@ -32,6 +53,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         ),
         body: ListView.builder(
           shrinkWrap: true,
+          reverse: true,
           itemCount: question.length,
           itemBuilder: (BuildContext context, index) {
             return Card(
@@ -49,7 +71,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           child: CircularProfileAvatar(
                             "",
                             child: Image.asset(
-                                "${question[index].imageUserProfile}"),
+                                "assets/images/profile4.jpg"),
                             radius: 100,
                             elevation: 5.0,
                           ),
@@ -62,17 +84,20 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             Text(
                               "${question[index].userName}",
                               style:
-                                  TextStyle(fontSize: 20, color: Colors.blue),
+                                  TextStyle(fontSize: 16, color: Colors.blue),
                             ),
+                            Text("${question[index].question}", style:
+                            TextStyle(fontSize: 17, color: Colors.black)),
                             SizedBox(
                               height: 5,
                             ),
-                            Text("${question[index].date}"),
+
+                            Text("${question[index].date}",style: TextStyle(fontSize: 12),),
                           ],
                         )
                       ],
                     ),
-                    Text("${question[index].question}"),
+
                     Divider(
                       thickness: 2,
                     ),
@@ -99,7 +124,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         InkWell(
                           onTap: () {
                             Navigator.of(context).push(
-                                MaterialPageRoute(builder: (_) => Answers()));
+                                MaterialPageRoute(builder: (_) => Answers(question[index].id)));
                           },
                           child: Row(
                             children: <Widget>[
@@ -143,7 +168,37 @@ class _QuestionScreenState extends State<QuestionScreen> {
         ));
   }
 
-  void shareText(var txt) {
-    Share.share('${txt}');
+  void shareText(var txt) async {
+    await Share.share('${txt}');
+  }
+
+
+  void getQuestions() async {
+    var req = await http.post('${Constants.SERVERURL}getAllQuestions', body: {
+      'cat_id': '${widget.postion}',
+    });
+
+    var res = convert.jsonDecode(req.body);
+    print(res);
+    bool err = res['error'];
+    if (!err) {
+      List data = res['data'];
+      List<QuestionItemModel> temp = [];
+      for (int i = 0; i < data.length; i++) {
+        temp.add(QuestionItemModel(
+            id: data[i]['id'],
+            userName: data[i]['user_name'],
+            question: data[i]['question'],
+            date: data[i]['created_at']));
+      }
+      setState(() {
+        question = temp;
+
+      });
+    } else {
+      setState(() {
+        question = [];
+      });
+    }
   }
 }

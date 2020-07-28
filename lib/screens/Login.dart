@@ -167,7 +167,7 @@ class _LoginState extends State<Login> {
   }
 
   startLogin() async {
-    print('pressed ');
+
 
     try {
       var req = await http.post('${Constants.SERVERURL}userLogin', body: {
@@ -183,6 +183,7 @@ class _LoginState extends State<Login> {
             name: res['data']['name'],
             email: res['data']['email'],
             phone: res['data']['phone'],
+            is_doctor: res['data']['is_doctor'],
             password: passwordController.text);
         Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
         AuthProvider.saveUserData(userModel);

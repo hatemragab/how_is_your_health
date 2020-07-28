@@ -10,6 +10,7 @@ class UserModel {
   List<String> ABO;
   String height;
   String weight;
+  String is_doctor;
 
   UserModel(
       {this.name,
@@ -18,6 +19,7 @@ class UserModel {
       this.password,
       this.img,
       this.ABO,
+      this.is_doctor,
       this.id,
       this.height,
       this.weight});
@@ -30,6 +32,7 @@ class UserModel {
     map['name'] = name;
     map['email'] = email;
     map['phone'] = phone;
+    map['is_doctor'] = is_doctor;
     map['password'] = password;
     return map;
   }
@@ -40,6 +43,7 @@ class UserModel {
     this.name = map['name'];
     this.email = map['email'];
     this.phone = map['phone'];
+    this.is_doctor = map['is_doctor'];
     this.password = map['password'];
   }
 
@@ -54,12 +58,12 @@ class UserModel {
 
   static fromMap(Map map) {
     return UserModel(
-        name: map['name'], email: map['email'], phone: map['phone']);
+        name: map['name'], email: map['email'], phone: map['phone'],is_doctor: map['is_doctor']);
   }
 
   @override
   String toString() {
-    // TODO: implement toString
+
     return '{"name":"$name","email":"$email","phone":"$phone","img":"$img"}';
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:how_is_your_health/Providers/AuthProvider.dart';
 import 'package:how_is_your_health/models/UserModel.dart';
 import 'package:how_is_your_health/models/categoryModel.dart';
@@ -12,7 +13,9 @@ import 'package:how_is_your_health/screens/UserProfile.dart';
 import 'package:provider/provider.dart';
 import 'package:statusbar_util/statusbar_util.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'dart:convert' as convert;
 class Category extends StatefulWidget {
   @override
   _CategoryState createState() => _CategoryState();
@@ -96,6 +99,7 @@ class _CategoryState extends State<Category> {
                               style: TextStyle(fontSize: 16.0),
                             ),
                           ),
+
                         ],
                       ),
                       Icon(Icons.keyboard_arrow_right)
@@ -117,9 +121,14 @@ class _CategoryState extends State<Category> {
                           Icon(Icons.question_answer),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "My Questions",
-                              style: TextStyle(fontSize: 16.0),
+                            child: InkWell(
+                              onTap: (){
+                                Fluttertoast.showToast(msg: 'coming soon ...');
+                              },
+                              child: Text(
+                                "My Questions",
+                                style: TextStyle(fontSize: 16.0),
+                              ),
                             ),
                           ),
                         ],
@@ -223,7 +232,7 @@ class _CategoryState extends State<Category> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => QuestionScreen()),
+                            builder: (context) => QuestionScreen(index)),
                       );
                     },
                     child: Card(

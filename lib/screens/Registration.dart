@@ -194,7 +194,25 @@ class _RegistrationState extends State<Registration> {
                                   );
                                 });
                           } else {
-                            startRegister();
+                            if(passwordController.text == confirmPasswordController.text){
+                              startRegister();
+                            }else{
+                              showDialog(
+                                  context: context,
+                                  builder: (x) {
+                                    return AlertDialog(
+                                      title: Text('error'),
+                                      content: Text('password not match'),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          onPressed: () => Navigator.pop(context),
+                                          child: Text('OK'),
+                                        )
+                                      ],
+                                    );
+                                  });
+                            }
+
                           }
                         },
                         color: Color(0xff4ce4b1),
@@ -245,7 +263,9 @@ class _RegistrationState extends State<Registration> {
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(20.0),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    startRegister(isDoctor: true);
+                  },
                   color: Colors.white,
                   textColor: Colors.white,
                   child: Text("Join Now",
@@ -257,13 +277,27 @@ class _RegistrationState extends State<Registration> {
     );
   }
 
-  startRegister() async {
-    var req = await http.post('${Constants.SERVERURL}createUsers', body: {
-      'name': usernameController.text,
-      'email': emailController.text,
-      'password': passwordController.text,
-      'phone': phoneController.text
-    });
+  startRegister({isDoctor = false}) async {
+    var req;
+    if(isDoctor){
+        req = await http.post('${Constants.SERVERURL}createUsers', body: {
+        'name': usernameController.text,
+        'email': emailController.text,
+        'password': passwordController.text,
+        'phone': phoneController.text,
+        'is_doctor': '1',
+      });
+    }else{
+        req = await http.post('${Constants.SERVERURL}createUsers', body: {
+        'name': usernameController.text,
+        'email': emailController.text,
+        'password': passwordController.text,
+        'phone': phoneController.text,
+          'is_doctor': '0',
+      });
+    }
+
+
     print(req.body);
 
     var res = convert.jsonDecode(req.body);
@@ -274,6 +308,7 @@ class _RegistrationState extends State<Registration> {
           name: res['data']['name'],
           email: res['data']['email'],
           phone: res['data']['phone'],
+          is_doctor: res['data']['is_doctor'],
           password: passwordController.text);
       Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
 
