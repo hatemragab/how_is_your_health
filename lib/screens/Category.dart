@@ -1,8 +1,7 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:how_is_your_health/Providers/AuthProvider.dart';
 import 'package:how_is_your_health/models/UserModel.dart';
@@ -11,11 +10,7 @@ import 'package:how_is_your_health/screens/Login.dart';
 import 'package:how_is_your_health/screens/QuestionScreen.dart';
 import 'package:how_is_your_health/screens/UserProfile.dart';
 import 'package:provider/provider.dart';
-import 'package:statusbar_util/statusbar_util.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-import 'dart:convert' as convert;
+
 class Category extends StatefulWidget {
   @override
   _CategoryState createState() => _CategoryState();
@@ -24,11 +19,11 @@ class Category extends StatefulWidget {
 class _CategoryState extends State<Category> {
   SwiperController controller = SwiperController();
   List<categoryModel> _listCategory = categoryModel.categoryList;
-  UserModel userModel;
+  late UserModel userModel;
   List<String> swiperImage = [
     "assets/images/d.jpg",
     "assets/images/TheFemaleDoctor.jpg",
-    "assets/images/doctora.jpg"
+    "assets/images/doctora.jpg",
   ];
 
   @override
@@ -41,10 +36,12 @@ class _CategoryState extends State<Category> {
 
   @override
   Widget build(BuildContext context) {
-    StatusbarUtil.setTranslucent();
-    StatusbarUtil.setStatusBarFont(FontStyle.black);
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.lightBlue),
@@ -74,10 +71,10 @@ class _CategoryState extends State<Category> {
                 ),
               ),
               decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: <Color>[
-                Colors.lightBlue,
-                Colors.lightBlueAccent
-              ])),
+                gradient: LinearGradient(
+                  colors: <Color>[Colors.lightBlue, Colors.lightBlueAccent],
+                ),
+              ),
             ),
             ListTile(
               title: InkWell(
@@ -87,115 +84,113 @@ class _CategoryState extends State<Category> {
                       .push(MaterialPageRoute(builder: (_) => UserProfile()));
                 },
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Icon(Icons.person),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Profile",
-                              style: TextStyle(fontSize: 16.0),
-                            ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.person),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Profile",
+                            style: TextStyle(fontSize: 16.0),
                           ),
-
-                        ],
-                      ),
-                      Icon(Icons.keyboard_arrow_right)
-                    ]),
+                        ),
+                      ],
+                    ),
+                    Icon(Icons.keyboard_arrow_right),
+                  ],
+                ),
               ),
             ),
-            Divider(
-              thickness: 2,
-            ),
+            Divider(thickness: 2),
             ListTile(
               title: InkWell(
                 splashColor: Colors.lightBlueAccent,
                 onTap: () {},
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Icon(Icons.question_answer),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: (){
-                                Fluttertoast.showToast(msg: 'coming soon ...');
-                              },
-                              child: Text(
-                                "My Questions",
-                                style: TextStyle(fontSize: 16.0),
-                              ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.question_answer),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              Fluttertoast.showToast(msg: 'coming soon ...');
+                            },
+                            child: Text(
+                              "My Questions",
+                              style: TextStyle(fontSize: 16.0),
                             ),
                           ),
-                        ],
-                      ),
-                      Icon(Icons.keyboard_arrow_right)
-                    ]),
+                        ),
+                      ],
+                    ),
+                    Icon(Icons.keyboard_arrow_right),
+                  ],
+                ),
               ),
             ),
-            Divider(
-              thickness: 2,
-            ),
+            Divider(thickness: 2),
             ListTile(
               title: InkWell(
                 splashColor: Colors.lightBlueAccent,
                 onTap: () {},
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Icon(Icons.more),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "About US",
-                              style: TextStyle(fontSize: 16.0),
-                            ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.more),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "About US",
+                            style: TextStyle(fontSize: 16.0),
                           ),
-                        ],
-                      ),
-                      Icon(Icons.keyboard_arrow_right)
-                    ]),
+                        ),
+                      ],
+                    ),
+                    Icon(Icons.keyboard_arrow_right),
+                  ],
+                ),
               ),
             ),
-            Divider(
-              thickness: 2,
-            ),
+            Divider(thickness: 2),
             ListTile(
               title: InkWell(
                 splashColor: Colors.lightBlueAccent,
                 onTap: () {
                   AuthProvider.deleteUserData();
                   Navigator.of(context).pushAndRemoveUntil(
-
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => Login()),
-                          (Route<dynamic> route) => false);
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => Login(),
+                    ),
+                    (Route<dynamic> route) => false,
+                  );
                 },
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Icon(Icons.exit_to_app),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Log Out",
-                              style: TextStyle(fontSize: 16.0),
-                            ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Icon(Icons.exit_to_app),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Log Out",
+                            style: TextStyle(fontSize: 16.0),
                           ),
-                        ],
-                      ),
-                      Icon(Icons.keyboard_arrow_right)
-                    ]),
+                        ),
+                      ],
+                    ),
+                    Icon(Icons.keyboard_arrow_right),
+                  ],
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -211,45 +206,45 @@ class _CategoryState extends State<Category> {
                 scrollDirection: Axis.horizontal,
                 itemCount: 3,
                 itemBuilder: (BuildContext context, index) {
-                  return Image.asset(
-                    swiperImage[index],
-                    fit: BoxFit.cover,
-                  );
+                  return Image.asset(swiperImage[index], fit: BoxFit.cover);
                 },
               ),
             ),
             GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 3.0,
-                    crossAxisSpacing: 3.0),
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: categoryModel.categoryList.length,
-                itemBuilder: (BuildContext context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => QuestionScreen(index)),
-                      );
-                    },
-                    child: Card(
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            "${_listCategory[index].image}",
-                            fit: BoxFit.cover,
-                            width: 90,
-                            height: 90,
-                          ),
-                          Text("${_listCategory[index].categoryName}")
-                        ],
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 3.0,
+                crossAxisSpacing: 3.0,
+              ),
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: categoryModel.categoryList.length,
+              itemBuilder: (BuildContext context, index) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuestionScreen(index),
                       ),
+                    );
+                  },
+                  child: Card(
+                    child: Column(
+                      children: <Widget>[
+                        Image.asset(
+                          "${_listCategory[index].image}",
+                          fit: BoxFit.cover,
+                          width: 90,
+                          height: 90,
+                        ),
+                        Text("${_listCategory[index].categoryName}"),
+                      ],
                     ),
-                  );
-                })
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -14,31 +14,33 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ^3.14.0
+  flutter: '>=3.50.0'
 
 dependencies:
+  material_ui: ^1.11.0
+  cupertino_ui: ^1.1.6
   flutter:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  statusbar_util: ^1.0.1
-  flutter_screenutil: ^1.0.2
-  font_awesome_flutter: ^8.7.0
-  flutter_swiper: ^1.1.6
-  circular_profile_avatar: ^1.0.6
-  provider: ^4.0.4
-  shared_preferences: ^0.5.6+1
-  image_picker: ^0.6.3+1
-  progress_dialog: ^1.2.1
-  fluttertoast: ^3.1.0
-  http: ^0.12.0+4
+  cupertino_icons: ^2.0.0
+  flutter_screenutil: ^5.9.3
+  font_awesome_flutter: ^11.0.0
+  card_swiper: ^3.0.1
+  circular_profile_avatar: ^2.0.5
+  provider: ^6.1.5+1
+  shared_preferences: ^2.5.6
+  image_picker: ^1.2.4
+  progress_dialog_null_safe: ^3.1.0
+  fluttertoast: ^10.0.2
+  http: ^1.6.0
 
-  share: ^0.6.4+3
+  share_plus: ^13.3.1
 
 dev_dependencies:
-  flutter_launcher_icons: "^0.7.3"
+  flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
 

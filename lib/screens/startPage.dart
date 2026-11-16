@@ -1,56 +1,54 @@
-import 'package:flutter/material.dart';
-import 'package:how_is_your_health/Constants.dart';
-import 'package:how_is_your_health/Providers/AuthProvider.dart';
-import 'package:how_is_your_health/models/UserModel.dart';
-import 'package:how_is_your_health/screens/Home.dart';
-import 'package:how_is_your_health/screens/Login.dart';
-import 'package:how_is_your_health/screens/Registration.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
+import 'package:material_ui/material_ui.dart';
+import 'package:provider/provider.dart';
+
+import '../Providers/AuthProvider.dart';
 import 'Category.dart';
+import 'Login.dart';
 
 class StartPage extends StatefulWidget {
+  const StartPage({super.key});
+
   @override
-  _StartPageState createState() => _StartPageState();
+  State<StartPage> createState() => _StartPageState();
 }
 
 class _StartPageState extends State<StartPage> {
+  String? _restoreError;
+  bool _restoring = false;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    new Future.delayed(const Duration(milliseconds: 3500), () async {
-      //check if email is save to start login if not Navigate to WelcomePage
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      String email = sharedPreferences.getString('user');
+    unawaited(_restoreSession());
+  }
 
-      UserModel userModel = await AuthProvider.getUserData();
-
-      if (userModel == null) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => Login()),
-            (Route<dynamic> route) => false);
-      } else {
-        Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => Category()),
-            (Route<dynamic> route) => false);
-      }
-
-      if (email != null) {
-        UserModel userModel = await AuthProvider.getUserData();
-        Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => Category()),
-            (Route<dynamic> route) => false);
-      } else {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => Login()),
-            (Route<dynamic> route) => false);
-      }
-    });
+  Future<void> _restoreSession({bool waitForSplash = true}) async {
+    if (_restoring) return;
+    _restoring = true;
+    if (_restoreError != null) setState(() => _restoreError = null);
+    try {
+      if (waitForSplash)
+        await Future<void>.delayed(const Duration(milliseconds: 3500));
+      if (!mounted) return;
+      final user = await AuthProvider.getUserData();
+      if (!mounted) return;
+      if (user != null) context.read<AuthProvider>().userModel = user;
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute<void>(
+          builder: (_) => user == null ? Login() : Category(),
+        ),
+        (_) => false,
+      );
+    } on Exception {
+      if (mounted)
+        setState(
+          () => _restoreError = 'Unable to restore your session. Please retry.',
+        );
+    } finally {
+      _restoring = false;
+    }
   }
 
   @override
@@ -60,44 +58,35 @@ class _StartPageState extends State<StartPage> {
         color: Colors.blue[400],
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(),
-            Container(),
-            Container(
-              child: Image.asset(
-                'assets/images/logo.png',
-                width: 150,
-                height: 150,
-              ),
-            ),
-            Container(),
-            Container(),
-            Center(
-              child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                      width: 20, height: 20, child: CircularProgressIndicator(backgroundColor: Colors.white,)),
+          children: [
+            const SizedBox.shrink(),
+            const SizedBox.shrink(),
+            Image.asset('assets/images/logo.png', width: 150, height: 150),
+            const SizedBox.shrink(),
+            const SizedBox.shrink(),
+            if (_restoreError == null)
+              const Center(
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              )
+            else
+              Column(
+                children: [
+                  Text(_restoreError!),
+                  TextButton(
+                    onPressed: () => _restoreSession(waitForSplash: false),
+                    child: const Text('Retry'),
+                  ),
                 ],
               ),
-            )
           ],
         ),
       ),
     );
-  }
-
-  void getUserData() async {
-    UserModel userModel = await AuthProvider.getUserData();
-
-    if (userModel == null) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => Login()),
-          (Route<dynamic> route) => false);
-    } else {
-      Provider.of<AuthProvider>(context, listen: false).userModel = userModel;
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => Category()),
-          (Route<dynamic> route) => false);
-    }
   }
 }

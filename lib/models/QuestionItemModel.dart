@@ -1,11 +1,13 @@
 class QuestionItemModel {
-  int id;
-  String userName;
-  String date;
-  String question;
+  final int id;
+  final String userName;
+  final String date;
+  final String question;
 
-  QuestionItemModel({this.id, this.userName, this.date, this.question});
-
-
-
+  QuestionItemModel({
+    required this.id,
+    required this.userName,
+    required this.date,
+    required this.question,
+  });
 }

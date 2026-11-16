@@ -1,6 +1,28 @@
 import 'dart:convert';
 
 class UserModel {
+  UserModel({
+    String? name,
+    String? email,
+    String? phone,
+    String? password,
+    String? img,
+    List<String>? ABO,
+    String? is_doctor,
+    String? id,
+    String? height,
+    String? weight,
+  }) : name = name ?? '',
+       email = email ?? '',
+       phone = phone ?? '',
+       password = password ?? '',
+       img = img ?? '',
+       ABO = ABO ?? <String>[],
+       is_doctor = is_doctor ?? '',
+       id = id ?? '',
+       height = height ?? '',
+       weight = weight ?? '';
+
   String name;
   String id;
   String email;
@@ -12,58 +34,41 @@ class UserModel {
   String weight;
   String is_doctor;
 
-  UserModel(
-      {this.name,
-      this.email,
-      this.phone,
-      this.password,
-      this.img,
-      this.ABO,
-      this.is_doctor,
-      this.id,
-      this.height,
-      this.weight});
+  Map<String, dynamic> toMap() => {
+    'id': id,
+    'name': name,
+    'email': email,
+    'phone': phone,
+    'is_doctor': is_doctor,
+    'password': password,
+    'img': img,
+    'ABO': ABO,
+    'height': height,
+    'weight': weight,
+  };
 
-  Map<String, dynamic> toMap() {
-    var map = Map<String, dynamic>();
-    if (id != null) {
-      map['id'] = id;
-    }
-    map['name'] = name;
-    map['email'] = email;
-    map['phone'] = phone;
-    map['is_doctor'] = is_doctor;
-    map['password'] = password;
-    return map;
-  }
+  factory UserModel.fromMapObject(Map<String, dynamic> map) =>
+      UserModel.fromMap(map);
 
-  // Extract a Note object from a Map object
-  UserModel.fromMapObject(Map<String, dynamic> map) {
-    this.id = map['id'];
-    this.name = map['name'];
-    this.email = map['email'];
-    this.phone = map['phone'];
-    this.is_doctor = map['is_doctor'];
-    this.password = map['password'];
-  }
-
-//  static toMap(UserModel userModel) {
-//    Map<String, String> map = new Map();
-//    map['name'] = userModel.name;
-//    map['email'] = userModel.email;
-//    map['phone'] = userModel.phone;
-//
-//    return map;
-//  }
-
-  static fromMap(Map map) {
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    final bloodGroups = map['ABO'];
     return UserModel(
-        name: map['name'], email: map['email'], phone: map['phone'],is_doctor: map['is_doctor']);
+      id: map['id']?.toString(),
+      name: map['name']?.toString(),
+      email: map['email']?.toString(),
+      phone: map['phone']?.toString(),
+      is_doctor: map['is_doctor']?.toString(),
+      password: map['password']?.toString(),
+      img: map['img']?.toString(),
+      ABO: bloodGroups is List
+          ? bloodGroups.whereType<String>().toList()
+          : null,
+      height: map['height']?.toString(),
+      weight: map['weight']?.toString(),
+    );
   }
 
   @override
-  String toString() {
-
-    return '{"name":"$name","email":"$email","phone":"$phone","img":"$img"}';
-  }
+  String toString() =>
+      jsonEncode({'name': name, 'email': email, 'phone': phone, 'img': img});
 }

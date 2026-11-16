@@ -1,32 +1,46 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:how_is_your_health/main.dart';
-import 'package:how_is_your_health/screens/Home.dart';
+import 'package:how_is_your_health/Providers/AuthProvider.dart';
+import 'package:how_is_your_health/models/UserModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(Home());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  TestWidgetsFlutterBinding.ensureInitialized();
+  test('missing or malformed saved sessions remain signed out', () async {
+    for (final stored in [null, '', '{broken', '[]', '{}']) {
+      SharedPreferences.setMockInitialValues({
+        if (stored != null) 'user': stored,
+      });
+      expect(await AuthProvider.getUserData(), isNull);
+    }
+  });
+  test('old stored profiles restore without newly required fields', () async {
+    SharedPreferences.setMockInitialValues({
+      'user': jsonEncode({'name': 'Hatem', 'email': 'user@example.com'}),
+    });
+    final user = await AuthProvider.getUserData();
+    expect(user?.name, 'Hatem');
+    expect(user?.id, '');
+    expect(user?.ABO, isEmpty);
+  });
+  test('saved names are escaped and passwords are not persisted', () async {
+    SharedPreferences.setMockInitialValues({});
+    final user = UserModel(
+      name: 'Name "quoted"\nline',
+      email: 'user@example.com',
+      password: 'private',
+      ABO: ['A+'],
+    );
+    await AuthProvider.saveUserData(user);
+    final saved = jsonDecode(
+      (await SharedPreferences.getInstance()).getString('user')!,
+    ) as Map<String, dynamic>;
+    expect(saved.containsKey('password'), isFalse);
+    final restored = await AuthProvider.getUserData();
+    expect(restored?.name, user.name);
+    expect(restored?.ABO, ['A+']);
+    await AuthProvider.deleteUserData();
+    expect(await AuthProvider.getUserData(), isNull);
   });
 }

@@ -29,6 +29,5 @@ class categoryModel {
     new categoryModel("assets/images/doc.jpg", "Surgery"),
     new categoryModel("assets/images/doctora.jpg", "children"),
     new categoryModel("assets/images/doctor.jpg", "Dentist"),
-
   ];
 }

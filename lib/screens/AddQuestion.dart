@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:how_is_your_health/Providers/AuthProvider.dart';
 import 'package:how_is_your_health/models/UserModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+
 import 'dart:convert' as convert;
 
 import '../Constants.dart';
 
-
 class AddQuestion extends StatefulWidget {
-  int p;
+  final int p;
 
   AddQuestion(this.p);
 
@@ -19,15 +19,15 @@ class AddQuestion extends StatefulWidget {
 }
 
 class _AddQuestionState extends State<AddQuestion> {
-  UserModel userModel;
+  late UserModel userModel;
   var txt = TextEditingController();
 
   @override
   void initState() {
     userModel = Provider.of<AuthProvider>(context, listen: false).userModel;
     super.initState();
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,34 +41,36 @@ class _AddQuestionState extends State<AddQuestion> {
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: <Widget>[
-              SizedBox(height: 15,),
+              SizedBox(height: 15),
               TextField(
                 controller: txt,
                 decoration: InputDecoration(hintText: 'Question'),
               ),
-              SizedBox(height: 15,),
-              TextField(
-                decoration: InputDecoration(hintText: 'Age'),
-              ),
-              SizedBox(height: 15,),
-              RaisedButton(
+              SizedBox(height: 15),
+              TextField(decoration: InputDecoration(hintText: 'Age')),
+              SizedBox(height: 15),
+              ElevatedButton(
                 onPressed: () {
                   addQuestion();
                 },
                 child: Text('Add'),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
-  void addQuestion()async{
-    var req = await http.post('${Constants.SERVERURL}create_questions', body: {
-      'question': '${txt.text}',
-      'cat_id': '${widget.p}',
-      'user_name': '${userModel.name}',
-    });
+
+  void addQuestion() async {
+    var req = await http.post(
+      Uri.parse('${Constants.SERVERURL}create_questions'),
+      body: {
+        'question': '${txt.text}',
+        'cat_id': '${widget.p}',
+        'user_name': '${userModel.name}',
+      },
+    );
 
     var res = convert.jsonDecode(req.body);
     print(res);
@@ -76,9 +78,8 @@ class _AddQuestionState extends State<AddQuestion> {
     if (!err) {
       Fluttertoast.showToast(msg: 'Question added ');
       txt.clear();
-    }else{
-    Fluttertoast.showToast(msg: 'error try again !');
+    } else {
+      Fluttertoast.showToast(msg: 'error try again !');
     }
-
   }
 }

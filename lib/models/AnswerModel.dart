@@ -1,10 +1,13 @@
-class AnswerModel{
-  int id ;
-  String answer;
-  String doctor_name;
-  String date;
+class AnswerModel {
+  final int? id;
+  final String answer;
+  final String doctor_name;
+  final String? date;
 
-  AnswerModel({this.id, this.answer, this.doctor_name, this.date});
-
-
+  AnswerModel({
+    this.id,
+    required this.answer,
+    required this.doctor_name,
+    this.date,
+  });
 }
